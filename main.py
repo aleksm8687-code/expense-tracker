@@ -76,7 +76,27 @@ def handle_category_stats() -> None:
 
 
 def handle_delete_expense() -> None:
-    print("Удаление пока не реализовано")
+    expenses = load_expenses(FILE_NAME)
+
+    if not expenses:
+        print("Список расходов пуст")
+        return
+
+    for line in format_expenses(expenses):
+        print(line)
+
+    try:
+        index = int(input("Введите номер расхода для удаления: "))
+        removed = delete_expense(expenses, index)
+    except ValueError:
+        print("Нужно ввести число")
+        return
+    except IndexError as error:
+        print(error)
+        return
+
+    save_expenses(expenses, FILE_NAME)
+    print(f"Удалён расход: {removed['description']}")
 
 
 def main() -> None:
