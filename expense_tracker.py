@@ -27,8 +27,26 @@ def save_expenses(expenses: list[dict[str, Any]], file_name: str = FILE_NAME) ->
 
 
 def add_expense(expenses: list[dict[str, Any]], category: str, description: str, amount: float, date: str) -> list[dict[str, Any]]:
-    """Заглушка для добавления расхода."""
-    raise NotImplementedError("Функция добавления расхода пока не реализована")
+    """Добавляет новый расход в список и возвращает обновленный список."""
+    category = category.strip()
+    description = description.strip()
+    date = date.strip()
+
+    if not category or not description or not date:
+        raise ValueError("Категория, описание и дата не должны быть пустыми")
+
+    if amount <= 0:
+        raise ValueError("Сумма должна быть больше нуля")
+
+    expense = {
+        "category": category,
+        "description": description,
+        "amount": float(amount),
+        "date": date,
+    }
+
+    expenses.append(expense)
+    return expenses
 
 
 def format_expenses(expenses: list[dict[str, Any]]) -> list[str]:

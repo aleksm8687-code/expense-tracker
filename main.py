@@ -23,7 +23,27 @@ def show_menu() -> None:
 
 
 def handle_add_expense() -> None:
-    print("Добавление расхода пока не реализовано")
+    expenses = load_expenses(FILE_NAME)
+
+    category = input("Введите категорию расхода: ")
+    description = input("Введите описание расхода: ")
+
+    try:
+        amount = float(input("Введите сумму расхода: "))
+    except ValueError:
+        print("Сумма должна быть числом")
+        return
+
+    date = input("Введите дату расхода в формате ГГГГ-ММ-ДД: ")
+
+    try:
+        updated_expenses = add_expense(expenses, category, description, amount, date)
+    except ValueError as error:
+        print(error)
+        return
+
+    save_expenses(updated_expenses, FILE_NAME)
+    print("Расход добавлен")
 
 
 def handle_show_expenses() -> None:
