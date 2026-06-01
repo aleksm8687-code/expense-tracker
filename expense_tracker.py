@@ -81,5 +81,8 @@ def category_statistics(expenses: list[dict[str, Any]]) -> dict[str, float]:
 
 
 def delete_expense(expenses: list[dict[str, Any]], index: int) -> dict[str, Any]:
-    """Заглушка для удаления расхода."""
-    raise NotImplementedError("Удаление расхода пока не реализовано")
+    """Удаляет расход по номеру и возвращает удаленную запись."""
+    if index < 1 or index > len(expenses):
+        raise IndexError("Расход с таким номером не найден")
+
+    return expenses.pop(index - 1)
