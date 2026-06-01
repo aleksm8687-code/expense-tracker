@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 from typing import Any
 
 FILE_NAME = "expenses.json"
@@ -37,6 +38,9 @@ def add_expense(expenses: list[dict[str, Any]], category: str, description: str,
 
     if amount <= 0:
         raise ValueError("Сумма должна быть больше нуля")
+
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+        raise ValueError("Дата должна быть в формате ГГГГ-ММ-ДД")
 
     expense = {
         "category": category,
