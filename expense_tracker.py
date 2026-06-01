@@ -50,18 +50,34 @@ def add_expense(expenses: list[dict[str, Any]], category: str, description: str,
 
 
 def format_expenses(expenses: list[dict[str, Any]]) -> list[str]:
-    """Заглушка для форматирования списка расходов."""
-    raise NotImplementedError("Вывод списка расходов пока не реализован")
+    """Возвращает список строк для вывода расходов."""
+    result = []
+
+    for index, expense in enumerate(expenses, start=1):
+        result.append(
+            f"{index}. {expense['date']} | "
+            f"{expense['category']} | "
+            f"{expense['description']} | "
+            f"{expense['amount']} тг"
+        )
+
+    return result
 
 
 def calculate_total(expenses: list[dict[str, Any]]) -> float:
-    """Заглушка для подсчета общей суммы."""
-    raise NotImplementedError("Подсчет общей суммы пока не реализован")
+    """Считает общую сумму расходов."""
+    return sum(float(expense["amount"]) for expense in expenses)
 
 
 def category_statistics(expenses: list[dict[str, Any]]) -> dict[str, float]:
-    """Заглушка для статистики по категориям."""
-    raise NotImplementedError("Статистика пока не реализована")
+    """Считает сумму расходов по каждой категории."""
+    stats: dict[str, float] = {}
+
+    for expense in expenses:
+        category = expense["category"]
+        stats[category] = stats.get(category, 0) + float(expense["amount"])
+
+    return stats
 
 
 def delete_expense(expenses: list[dict[str, Any]], index: int) -> dict[str, Any]:

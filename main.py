@@ -47,15 +47,32 @@ def handle_add_expense() -> None:
 
 
 def handle_show_expenses() -> None:
-    print("Вывод расходов пока не реализован")
+    expenses = load_expenses(FILE_NAME)
+
+    if not expenses:
+        print("Список расходов пуст")
+        return
+
+    for line in format_expenses(expenses):
+        print(line)
 
 
 def handle_show_total() -> None:
-    print("Подсчёт суммы пока не реализован")
+    expenses = load_expenses(FILE_NAME)
+    total = calculate_total(expenses)
+    print(f"Общая сумма расходов: {total} тг")
 
 
 def handle_category_stats() -> None:
-    print("Статистика пока не реализована")
+    expenses = load_expenses(FILE_NAME)
+
+    if not expenses:
+        print("Нет данных для статистики")
+        return
+
+    print("Статистика по категориям:")
+    for category, total in category_statistics(expenses).items():
+        print(f"{category}: {total} тг")
 
 
 def handle_delete_expense() -> None:
